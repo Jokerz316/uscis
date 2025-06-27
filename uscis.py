@@ -12,6 +12,7 @@ import pyperclip
 CONFIG_FILE = "config.json"
 VERSIONS_DIR = "form_versions"
 DEFAULT_FORM_LINKS = {
+    'I-765': 'https://www.uscis.gov/sites/default/files/document/forms/i-765.pdf',
     'I-485': 'https://www.uscis.gov/sites/default/files/document/forms/i-485.pdf',
     'I-485A': 'https://www.uscis.gov/sites/default/files/document/forms/i-485supa.pdf',
     'I-130': 'https://www.uscis.gov/sites/default/files/document/forms/i-130.pdf',
