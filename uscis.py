@@ -12,10 +12,40 @@ import pyperclip
 CONFIG_FILE = "config.json"
 VERSIONS_DIR = "form_versions"
 DEFAULT_FORM_LINKS = {
-    'I-765': 'https://www.uscis.gov/sites/default/files/document/forms/i-765.pdf',
+  'I-765': 'https://www.uscis.gov/sites/default/files/document/forms/i-765.pdf',
     'I-485': 'https://www.uscis.gov/sites/default/files/document/forms/i-485.pdf',
     'I-485A': 'https://www.uscis.gov/sites/default/files/document/forms/i-485supa.pdf',
-    'I-130': 'https://www.uscis.gov/sites/default/files/document/forms/i-130.pdf'
+    'I-130': 'https://www.uscis.gov/sites/default/files/document/forms/i-130.pdf',
+    'I-130A': 'https://www.uscis.gov/sites/default/files/document/forms/i-130a.pdf',
+    'I-821D': 'https://www.uscis.gov/sites/default/files/document/forms/i-821d.pdf',
+    'I-821': 'https://www.uscis.gov/sites/default/files/document/forms/i-821.pdf',
+    'I-134': 'https://www.uscis.gov/sites/default/files/document/forms/i-134.pdf',
+    'I-140': 'https://www.uscis.gov/sites/default/files/document/forms/i-140.pdf',
+    'I-129F': 'https://www.uscis.gov/sites/default/files/document/forms/i-129f.pdf',
+    'I-131': 'https://www.uscis.gov/sites/default/files/document/forms/i-131.pdf',
+    'I-539': 'https://www.uscis.gov/sites/default/files/document/forms/i-539.pdf',
+    'I-589': 'https://www.uscis.gov/sites/default/files/document/forms/i-589.pdf',
+    'I-612': 'https://www.uscis.gov/sites/default/files/document/forms/i-612.pdf',
+    'I-751': 'https://www.uscis.gov/sites/default/files/document/forms/i-751.pdf',
+    'I-817': 'https://www.uscis.gov/sites/default/files/document/forms/i-817.pdf',
+    'I-824': 'https://www.uscis.gov/sites/default/files/document/forms/i-824.pdf',
+    'I-864': 'https://www.uscis.gov/sites/default/files/document/forms/i-864.pdf',
+    'I-864A': 'https://www.uscis.gov/sites/default/files/document/forms/i-864a.pdf',
+    'I-864EZ': 'https://www.uscis.gov/sites/default/files/document/forms/i-864ez.pdf',
+    'I-864P': 'https://www.uscis.gov/sites/default/files/document/forms/i-864.pdf',
+    'I-881': 'https://www.uscis.gov/sites/default/files/document/forms/i-881.pdf',
+    'I-912': 'https://www.uscis.gov/sites/default/files/document/forms/i-912.pdf',
+    'N-400': 'https://www.uscis.gov/sites/default/files/document/forms/n-400.pdf',
+    'N-565': 'https://www.uscis.gov/sites/default/files/document/forms/n-565.pdf',
+    'N-600': 'https://www.uscis.gov/sites/default/files/document/forms/n-600.pdf',
+    'I-90': 'https://www.uscis.gov/sites/default/files/document/forms/i-90.pdf',
+    'AR-11': 'https://www.uscis.gov/sites/default/files/document/forms/ar-11.pdf',
+    'EOIR-29': 'https://www.uscis.gov/sites/default/files/document/forms/eoir-29.pdf',
+    'G-325A': 'https://www.uscis.gov/sites/default/files/document/forms/g-325a.pdf',
+    'G-639': 'https://www.uscis.gov/sites/default/files/document/forms/g-639.pdf',
+    'G-1055': 'https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf',
+    'G-1450': 'https://www.uscis.gov/sites/default/files/document/forms/g-1450.pdf'
+
 }
 
 LIVE_USCIS_FORMS_URL = "https://www.uscis.gov/forms/all-forms"
