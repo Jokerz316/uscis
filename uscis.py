@@ -85,7 +85,7 @@ ctk.set_appearance_mode(appearance_mode)
 ctk.set_default_color_theme("green")
 
 app = ctk.CTk()
-app.title("USCIS Form Downloader by Jose N. (v1.0)")
+app.title("USCIS by Chino. (v1.0)")
 app.geometry("900x800")
 
 search_var = ctk.StringVar()
