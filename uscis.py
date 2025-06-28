@@ -199,23 +199,50 @@ search_entry = ctk.CTkEntry(app, textvariable=search_var, placeholder_text="Sear
 search_entry.pack(padx=20, pady=(10, 5), fill="x")
 
 # ---------------- Form Selection Area ----------------
-scroll_frame = ctk.CTkScrollableFrame(app, label_text="Select Forms to Download", height=250)
-scroll_frame.pack(padx=20, pady=(5, 5), fill='both', expand=False)
+scroll_frame = ctk.CTkScrollableFrame(app, label_text="Select Forms to Download")
+scroll_frame.pack(padx=20, pady=(5, 5), fill='both', expand=True)
+last_width = [0]  # Used to track previous width for resize detection
+
+def on_scroll_frame_resize(event):
+    new_width = scroll_frame.winfo_width()
+    if abs(new_width - last_width[0]) > 30:
+        last_width[0] = new_width
+        if hasattr(app, "_resize_after_id"):
+            app.after_cancel(app._resize_after_id)
+        app._resize_after_id = app.after(300, preserve_scroll_and_rebuild)
+
+
+
+scroll_frame.bind("<Configure>", on_scroll_frame_resize)
 
 def rebuild_form_list():
+    scroll_frame.update_idletasks()
+
+    # Clear previous children
     for widget in scroll_frame.winfo_children():
         widget.destroy()
     selected_forms.clear()
     form_rows.clear()
 
+    # Create a centered container frame inside scroll_frame
+    container = ctk.CTkFrame(scroll_frame)
+    container.pack(pady=10)
+
     query = search_var.get().lower().strip()
     items = [k for k in sorted(forms) if query in k.lower()] if query else sorted(forms)
 
-    cols = 3
+    frame_width = scroll_frame.winfo_width()
+    approx_column_width = 280
+    cols = max(1, frame_width // approx_column_width)
+
+    total_used_width = cols * approx_column_width
+    extra_space = max(0, frame_width - total_used_width)
+    start_col = max(0, extra_space // 2 // approx_column_width)
+
     for i, form in enumerate(items):
         row, col = divmod(i, cols)
-        frame = ctk.CTkFrame(scroll_frame)
-        frame.grid(row=row, column=col, padx=5, pady=5, sticky="w")
+        frame = ctk.CTkFrame(container)
+        frame.grid(row=row, column=col + start_col, padx=5, pady=5, sticky="w")
 
         var = ctk.BooleanVar(value=True)
         chk = ctk.CTkCheckBox(frame, text=form, variable=var)
@@ -231,6 +258,10 @@ def rebuild_form_list():
 
         selected_forms[form] = var
         form_rows[form] = frame
+
+    scroll_frame._parent_canvas.configure(scrollregion=scroll_frame._parent_canvas.bbox("all"))
+
+
 
 search_var.trace_add("write", lambda *_: rebuild_form_list())
 rebuild_form_list()
@@ -370,6 +401,34 @@ ctk.CTkButton(btn_frame, text="Exit", command=app.destroy, width=100, fg_color="
 log_box = ctk.CTkTextbox(app, height=150)
 log_box.pack(padx=20, pady=(5, 20), fill="both")
 log_box.configure(state="disabled")
+
+# ✅ Bind window resize to dynamic layout update
+resize_timer = [None]
+
+def on_resize(event):
+    if resize_timer[0]:
+        app.after_cancel(resize_timer[0])
+    resize_timer[0] = app.after(400, preserve_scroll_and_rebuild)
+
+def preserve_scroll_and_rebuild():
+    rebuild_form_list()
+    try:
+        scroll_frame._parent_canvas.yview_moveto(0)
+    except Exception as e:
+        print("Scroll restore failed:", e)
+        try:
+            scroll_frame._parent_canvas.yview_moveto(pos[0])  # Restore scroll
+        except Exception as e:
+            print("Scroll restore failed:", e)
+
+    app.after(50, delayed_rebuild)  # slight delay to let layout settle
+    def on_scroll_frame_resize(event):
+        new_width = scroll_frame.winfo_width()
+        if abs(new_width - last_width[0]) > 30:
+            last_width[0] = new_width
+            preserve_scroll_and_rebuild()
+
+scroll_frame.bind("<Configure>", on_scroll_frame_resize)
 
 # ---------------- Launch App ----------------
 app.mainloop()
